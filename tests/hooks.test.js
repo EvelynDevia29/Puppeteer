@@ -4,7 +4,7 @@ describe('Extraer Informacion', () => {
 
     let browser
     let page
-    beforeEach(async () => {
+    beforeAll(async () => {
         browser = await puppeteer.launch({
             headless: false,
             defaultViewport: null,//expanda al tam de la ventana
@@ -13,9 +13,11 @@ describe('Extraer Informacion', () => {
         })
 
         page = await browser.newPage()
-    })
+        await page.goto('https://platzi.com', { waitUntil: 'networkidle0' })
 
-    afterEach(async () => {
+    },10000)
+
+    afterAll(async () => {
         await browser.close()
 
     })
@@ -23,7 +25,7 @@ describe('Extraer Informacion', () => {
     it('Extraer el titulo de la pagina y la url', async () => {
        
         //Ir a la pagina
-        await page.goto('https://platzi.com', { waitUntil: 'networkidle0' })
+        
 
         //Extraer el titulo y la url de la pagina 
         const titulo = await page.title()
@@ -36,9 +38,6 @@ describe('Extraer Informacion', () => {
 
     it('Extraer la informacion de un elemento', async () => {
        
-         //Ir a la pagina
-        await page.goto('https://platzi.com', { waitUntil: 'networkidle0' })
-        //Esperar por el selector del boton Crera cuenta de la page Platzi
         await page.waitForSelector('#Header-v2 > nav.Nav-header.Nav-header-mobileCtas > section > button.Button.Button--medium.Button--sky.Button--primary.Nav-header-mobileCtas-actions--login')
 
         //Funcion que corre el metodo document.querySelector
@@ -68,11 +67,7 @@ describe('Extraer Informacion', () => {
 
 
         it('contar elementos de una pagina', async () => {
-           
-    
-            //Ir a la pagina
-            await page.goto('https://platzi.com', { waitUntil: 'networkidle0' })
-                
+                         
             const imagenes = await page.$$eval('img', (imagenes)=> imagenes.length)    
             console.log('imagenes', imagenes)
     

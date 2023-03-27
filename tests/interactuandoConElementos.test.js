@@ -23,6 +23,8 @@ describe('Interactuando con elemntos', () => {
             await dialog.accept()
 
         })
+        
+       
 
         //click derecho
         // await page.click('#authentication > span', { button: 'right', delay:500})
